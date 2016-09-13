@@ -1,7 +1,7 @@
 {
   "name": "serve-static-assets",
   "version": "0.0.1",
-  "description": "",
+  "description": "Serve static assets from the file system.",
   "keywords": [],
   "homepage": "https://github.com/vinsonchuong/serve-static-assets",
   "bugs": "https://github.com/vinsonchuong/serve-static-assets/issues",
@@ -14,7 +14,6 @@
   ],
   "main": "src/index.js",
   "bin": {
-    "serve-static-assets": "src/bin/serve-static-assets.js"
   },
   "repository": {
     "type": "git",
@@ -25,7 +24,6 @@
     "test": "eslint && jasmine"
   },
   "dependencies": {
-    "node-promise-es6": "^0.3.2"
   },
   "devDependencies": {
     "dist-es6": "^0.2.4",
