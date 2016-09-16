@@ -6,10 +6,7 @@ export default async function(request) {
   let filePath, fileStats;
 
   try {
-    filePath = path.join(
-      this.path(),
-      decodeURIComponent(url.parse(request.url).pathname)
-    );
+    filePath = this.path(request.path);
 
     if (!this.contains(filePath)) {
       return null;

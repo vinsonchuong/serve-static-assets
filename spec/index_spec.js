@@ -23,7 +23,7 @@ const inject = register({
 describe('serve-static-assets', () => {
   it('returns null for a file that does not exist', inject(async ({project}) => {
     const request = {
-      url: '/foo.html'
+      path: 'foo.html'
     };
     expect(await project::serveStaticAssets(request)).toBe(null);
   }))
@@ -37,7 +37,7 @@ describe('serve-static-assets', () => {
     })
 
     const request = {
-      url: '/foo.html'
+      path: 'foo.html'
     };
     const file = await project::serveStaticAssets(request);
     expect(file.path).toBe(project.path('foo.html'));
@@ -55,7 +55,7 @@ describe('serve-static-assets', () => {
     })
 
     const request = {
-      url: '/'
+      path: ''
     };
     const file = await project::serveStaticAssets(request);
     expect(file.path).toBe(project.path('index.html'));
