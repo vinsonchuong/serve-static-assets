@@ -26,7 +26,7 @@ describe('serve-static-assets', () => {
       path: 'foo.html'
     };
     expect(await serveStaticAssets(project, request)).toBe(null);
-  }))
+  }));
 
   it('returns metadata for a given file', inject(async ({project}) => {
     await project.write({
@@ -34,7 +34,7 @@ describe('serve-static-assets', () => {
         <!doctype html>
         <meta charset="utf-8">
       `
-    })
+    });
 
     const request = {
       path: 'foo.html'
@@ -42,7 +42,7 @@ describe('serve-static-assets', () => {
     const file = await serveStaticAssets(project, request);
     expect(file.type).toBe('.html');
     expect(file.stats).toEqual(await project.stat('src/foo.html'));
-    expect(await file.stream()::read())
+    expect(await file.stream::read())
       .toBe(await project.read('src/foo.html'));
   }));
 
@@ -52,7 +52,7 @@ describe('serve-static-assets', () => {
         <!doctype html>
         <meta charset="utf-8">
       `
-    })
+    });
 
     const request = {
       path: ''
@@ -60,7 +60,7 @@ describe('serve-static-assets', () => {
     const file = await serveStaticAssets(project, request);
     expect(file.type).toBe('.html');
     expect(file.stats).toEqual(await project.stat('src/index.html'));
-    expect(await file.stream()::read())
+    expect(await file.stream::read())
       .toBe(await project.read('src/index.html'));
   }));
 });

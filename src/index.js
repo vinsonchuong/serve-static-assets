@@ -1,6 +1,5 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as url from 'url';
 
 export default async function(root, request) {
   let filePath, fileStats;
@@ -22,7 +21,7 @@ export default async function(root, request) {
     return {
       type: path.extname(filePath),
       stats: fileStats,
-      stream: () => fs.createReadStream(filePath)
+      stream: fs.createReadStream(filePath)
     };
   } catch (error) {
     return null;
