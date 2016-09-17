@@ -40,7 +40,6 @@ describe('serve-static-assets', () => {
       path: 'foo.html'
     };
     const file = await serveStaticAssets(project, request);
-    expect(file.path).toBe(project.path('src/foo.html'));
     expect(file.type).toBe('.html');
     expect(file.stats).toEqual(await project.stat('src/foo.html'));
     expect(await file.stream()::read())
@@ -59,7 +58,6 @@ describe('serve-static-assets', () => {
       path: ''
     };
     const file = await serveStaticAssets(project, request);
-    expect(file.path).toBe(project.path('src/index.html'));
     expect(file.type).toBe('.html');
     expect(file.stats).toEqual(await project.stat('src/index.html'));
     expect(await file.stream()::read())

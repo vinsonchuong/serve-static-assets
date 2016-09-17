@@ -20,7 +20,6 @@ export default async function(root, request) {
     }
 
     return {
-      path: filePath,
       type: path.extname(filePath),
       stats: fileStats,
       stream: () => fs.createReadStream(filePath)
