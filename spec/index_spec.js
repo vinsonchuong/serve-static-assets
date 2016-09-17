@@ -25,12 +25,12 @@ describe('serve-static-assets', () => {
     const request = {
       path: 'foo.html'
     };
-    expect(await project::serveStaticAssets(request)).toBe(null);
+    expect(await serveStaticAssets(project, request)).toBe(null);
   }))
 
   it('returns metadata for a given file', inject(async ({project}) => {
     await project.write({
-      'foo.html': `
+      'src/foo.html': `
         <!doctype html>
         <meta charset="utf-8">
       `
@@ -39,16 +39,17 @@ describe('serve-static-assets', () => {
     const request = {
       path: 'foo.html'
     };
-    const file = await project::serveStaticAssets(request);
-    expect(file.path).toBe(project.path('foo.html'));
+    const file = await serveStaticAssets(project, request);
+    expect(file.path).toBe(project.path('src/foo.html'));
     expect(file.type).toBe('.html');
-    expect(file.stats).toEqual(await project.stat('foo.html'));
-    expect(await file.stream()::read()).toBe(await project.read('foo.html'));
+    expect(file.stats).toEqual(await project.stat('src/foo.html'));
+    expect(await file.stream()::read())
+      .toBe(await project.read('src/foo.html'));
   }));
 
   it('returns metadata for directory/index.html given a directory', inject(async ({project}) => {
     await project.write({
-      'index.html': `
+      'src/index.html': `
         <!doctype html>
         <meta charset="utf-8">
       `
@@ -57,10 +58,11 @@ describe('serve-static-assets', () => {
     const request = {
       path: ''
     };
-    const file = await project::serveStaticAssets(request);
-    expect(file.path).toBe(project.path('index.html'));
+    const file = await serveStaticAssets(project, request);
+    expect(file.path).toBe(project.path('src/index.html'));
     expect(file.type).toBe('.html');
-    expect(file.stats).toEqual(await project.stat('index.html'));
-    expect(await file.stream()::read()).toBe(await project.read('index.html'));
+    expect(file.stats).toEqual(await project.stat('src/index.html'));
+    expect(await file.stream()::read())
+      .toBe(await project.read('src/index.html'));
   }));
 });

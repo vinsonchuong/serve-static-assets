@@ -2,21 +2,21 @@ import * as fs from 'fs';
 import * as path from 'path';
 import * as url from 'url';
 
-export default async function(request) {
+export default async function(root, request) {
   let filePath, fileStats;
 
   try {
-    filePath = this.path(request.path);
+    filePath = root.path('src', request.path);
 
-    if (!this.contains(filePath)) {
+    if (!root.contains(filePath)) {
       return null;
     }
 
-    fileStats = await this.stat(filePath);
+    fileStats = await root.stat(filePath);
 
     if (fileStats.isDirectory()) {
       filePath = path.join(filePath, 'index.html');
-      fileStats = await this.stat(filePath);
+      fileStats = await root.stat(filePath);
     }
 
     return {
