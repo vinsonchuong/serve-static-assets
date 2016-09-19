@@ -63,4 +63,11 @@ describe('serve-static-assets', () => {
     expect(await file.stream::read())
       .toBe(await project.read('src/index.html'));
   }));
+
+  it('returns null for a file outside of the project directory', inject(async ({project}) => {
+    const request = {
+      path: '../../package.json'
+    };
+    expect(await serveStaticAssets(project, request)).toBe(null);
+  }));
 });
