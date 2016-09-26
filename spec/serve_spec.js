@@ -2,33 +2,15 @@ import register from 'test-inject';
 import Directory from 'directory-helpers';
 import fetch from 'node-fetch';
 
-async function sleep(ms) {
-  await new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
-
 const inject = register({
   project: {
     setUp: () => new Directory('project'),
     tearDown: async (project) => {
-      if ('server' in project) {
-        const serverPid = await project.exec('pgrep', ['-f', 'node.*serve$']);
-        await project.exec('kill', [serverPid]);
-        await sleep(1000);
-      }
+      await project.stop();
       await project.remove();
     }
   }
 });
-
-async function start() {
-  this.server = this.spawn('npm', ['start']);
-  this.server.forEach((output) => {
-    process.stderr.write(output);
-  });
-  await this.server.filter((output) => output.match(/Listening/));
-}
 
 async function writeBoilerplate() {
   await this.write({
@@ -40,7 +22,6 @@ async function writeBoilerplate() {
       }
     }
   });
-  await this.symlink('../node_modules', 'node_modules');
 }
 
 async function assertResponse(response, {status, headers = {}, body}) {
@@ -68,7 +49,7 @@ describe('serve-bin', () => {
       `,
       'src/image.png': ''
     });
-    await project::start();
+    await project.start(/Listening/);
 
     await assertResponse(
       await fetch('http://localhost:8080'),

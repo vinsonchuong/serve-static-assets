@@ -24,7 +24,7 @@
     "test": "eslint && jasmine"
   },
   "dependencies": {
-    "directory-helpers": "^0.1.5"
+    "directory-helpers": "^0.1.6"
   },
   "devDependencies": {
     "dist-es6": "^0.2.4",
